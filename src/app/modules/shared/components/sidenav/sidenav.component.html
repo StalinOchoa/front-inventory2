@@ -1,3 +1,66 @@
-<p>sidenav works!</p>
 
-<router-outlet></router-outlet>
+<div class="dashboard-container" [class.is-mobile]="mobileQuery.matches">
+<!-- boton hamburguesa --empieza toolbar -->
+    <mat-toolbar color="primary" class="dashboard-toolbar">
+        <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+        <!-- Nombre del sistema -->
+        <h1 class="app-name">S-Inventario de licores</h1>
+<!-- boton ayuda y cierre de sesion-->
+        <div class="right">
+            <ul>
+                <li>
+                    <button mat-icon-button>
+                        <mat-icon>help_outline</mat-icon>
+                    </button>
+                </li>
+                <li>
+                 <!--    matMenuTriggerFor es una directiva y linkea al menu de abajo -->
+                    <button mat-button [matMenuTriggerFor]="menu">
+                        <mat-icon>person_outline</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                          <mat-icon>exit_to_app</mat-icon> 
+                          Cerrar Sesión     
+                    </mat-menu>
+                </li>
+            </ul>
+        </div>
+
+
+    </mat-toolbar>
+
+   <!-- empieza el sidenav  -->
+   <mat-sidenav-container class="sidenav-container"
+                            [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+<!-- este codigo servira para dispositivos y para PC -->
+                <mat-sidenav #snav [mode]="mobileQuery.matches? 'over': 'side'"
+                    [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+
+                    <mat-nav-list>
+<!-- perfil -->
+                        <div class="profile-card">
+                            <div class="header">
+                                <h2>Stalin Ochoa</h2>
+                                <h4>stalin.or7&#64;gmail.com</h4>
+                            </div>
+                        </div>
+                        <mat-divider></mat-divider>
+
+                        <a mat-list-item [routerLink]="nav.route" *ngFor="let nav of menuNav">
+                            <mat-icon class="icono"> {{ nav.icon }}</mat-icon>
+                            {{nav.name}}
+                        </a>
+
+                    </mat-nav-list>
+                </mat-sidenav>   
+                
+                <mat-sidenav-content>
+                    <router-outlet></router-outlet>
+                </mat-sidenav-content>
+
+   </mat-sidenav-container>
+
+    
+</div>
+
+
