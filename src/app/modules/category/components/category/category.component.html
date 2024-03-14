@@ -5,7 +5,8 @@
         <div>
             <mat-form-field hintLabel="Busque categoria" appearance="fill">
                 <mat-label>Buscar Categorías</mat-label>
-                <input matInput #input>
+                <!-- el evento keyup sirve para cuando el usuario teclee y luego quite el evento se active -->
+                <input matInput #input (keyup)="buscar(input.value)">
 
             </mat-form-field>
         </div>

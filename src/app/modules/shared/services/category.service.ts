@@ -48,4 +48,13 @@ daleteCategorie(id: any){
   return this.http.delete(endpoint);
 }
 
+/**
+ * buscar categoria
+ */
+
+getCategorieById(id: any){
+  const endpoint = `${base_url}/categories/ ${id}`;
+  return this.http.get(endpoint);
+}
+
 }
