@@ -1,6 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CategoryService } from '../../../shared/services/category.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { NewCategoryComponent } from '../new-category/new-category.component';
+import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-category',
@@ -9,8 +12,10 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 /* inyectamos el servicio de obtener categorias al componente*/
 export class CategoryComponent implements OnInit {
-
+/* inyectar dependencias en angular  */
   private categoryService = inject(CategoryService);
+  private snackBar = inject(MatSnackBar);
+  public dialog = inject(MatDialog);
 
 /* implementando OnInit es para cargar componentes */
   ngOnInit(): void {
@@ -49,6 +54,32 @@ export class CategoryComponent implements OnInit {
       
       
     }
+
+  }
+
+  openCategoryDialog(){
+    const dialogRef = this.dialog.open(NewCategoryComponent, {
+      width: '450px'
+      
+    });
+
+    dialogRef.afterClosed().subscribe((result:any) => {
+      
+      if( result == 1){
+        this.openSnackBar("Categoria Agregada", "Exitosa");
+        this.getCategories(); 
+      }else if (result ==2) {
+        this.openSnackBar("Se produjo un error al guardar categoria", "Error");
+      }
+    });
+  }
+
+  openSnackBar(message: string, action: string) : MatSnackBarRef<SimpleSnackBar>{
+    return this.snackBar.open(message, action, {
+   /*  duracion del mensaje en segundos */
+   duration: 2000
+  })
+   
 
   }
 
