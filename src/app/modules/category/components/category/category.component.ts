@@ -1,10 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { CategoryService } from '../../../shared/services/category.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { NewCategoryComponent } from '../new-category/new-category.component';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { ConfirmComponent } from '../../../shared/components/confirm/confirm.component';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-category',
@@ -25,6 +26,10 @@ export class CategoryComponent implements OnInit {
  /*  aqui se setea la informacion para las tablas que viene del springboot */
   displayedColumns: string[] = ['id', 'name', 'description', 'actions'];
   dataSource = new MatTableDataSource<CategoryElement>();
+
+ /*  sirve para establecer cuantos registros mostrarme en pantalla */
+ @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
 
   getCategories(): void {
 
@@ -52,7 +57,7 @@ export class CategoryComponent implements OnInit {
       });
 
       this.dataSource = new MatTableDataSource<CategoryElement>(dataCategory);
-      
+      this.dataSource.paginator = this.paginator;
       
     }
 
