@@ -39,4 +39,13 @@ updateCategorie(body: any, id: any){
   return this.http.put(endpoint, body);
 }
 
+/**
+ * eliminar categoria
+ */
+
+daleteCategorie(id: any){
+  const endpoint = `${base_url}/categories/ ${id}`;
+  return this.http.delete(endpoint);
+}
+
 }
